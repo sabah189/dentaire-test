@@ -98,8 +98,9 @@ if ($result)
                         </div>
                         <div class="form-gp">
                             <label for="exampleInputPassword1">Mot de passe</label>
-                            <input type="password" id="exampleInputPassword1" name="pas">
                             <i class="ti-lock"></i>
+                            <input type="password" id="exampleInputPassword1" name="pas">
+                            
                             <div class="text-danger"></div>
                         </div>
                         

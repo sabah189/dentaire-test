@@ -169,6 +169,23 @@ if (isset($_POST['ajouter'])) {
               
         </div>
 
+
+        
+        <?php 
+
+
+$req = "select * from acte";
+$rs = mysqli_query($conn,$req) or die(mysqli_error());
+$option = NULL;
+
+while($row = mysqli_fetch_assoc($rs))
+    {
+      $option .= '<option value = "'.$row['id_acte'].'"> '.$row['acte'].' </option>';
+    }
+
+?>
+
+
          <!-- Extra Large modal start -->
        
                                 <!-- Large modal -->
@@ -208,12 +225,16 @@ if (isset($_POST['ajouter'])) {
                   
                         <div class="form-group">
                                             <label class="col-form-label">Acte :</label>
-                                            <input class="form-control" type="text" name="acte" id="example-text-input">
+                                            <select name="cat" id="cat" class="form-control" onchange="Fetchmed(this.value)" > 
+        <option value = "<?php while($row = mysqli_fetch_assoc($rs))
+    {
+      $option .= '<option value = "'.$row['id_acte'].'">'.$row['acte'].'</option>'; }  ?>"><?php echo $option; ?></option>
+    </select>
        
                         </div>
                         <div class="form-group">
                                             <label class="col-form-label">Tarif :</label>
-                                            <input class="form-control" type="text" name="tarif" id="example-text-input">
+                                            <input class="form-control" type="text" name="med"  id="example-text-input">
                         </div>
                         <div class="form-group">
                                             <label class="col-form-label">pat :</label>
@@ -221,6 +242,28 @@ if (isset($_POST['ajouter'])) {
                         </div>
                     
                                                 </div>
+
+
+                                                <script type="text/javascript">
+  function Fetchmed(id){
+    $('#med').html('');
+    $.ajax({
+      type:'post',
+	  url: 'ajaxdata.php',
+      data : { cat_id : id},
+      success : function(data){
+         $('#med').html(data);
+      }
+
+    })
+  }
+
+  
+
+  
+</script>
+
+
 
 <?php
 
@@ -235,7 +278,7 @@ include('dentchart.php');
                        
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <input type="submit" class="btn btn-secondary" name="ajouter" value="ajouter">
+                                                <input type="submit" class="btn btn-primary" name="ajouter" value="ajouter">
                                             </div>
                                             </form>
                                         </div>
@@ -365,122 +408,31 @@ while($row = mysqli_fetch_assoc($rs))
       $option .= '<option value = "'.$row['id_cat'].'"> '.$row['nom_cat'].' </option>';
     }
 
-
-	$req2 = "SELECT * from medicament ";
-$rs2 = mysqli_query($conn,$req2) or die(mysqli_error());
-$option2 = NULL;
-while($row2 = mysqli_fetch_assoc($rs2))
-    {
-      $option2 .= '<option value = "'.$row2['id_med'].'">'.$row2['nom_med'].'</option>';
-    }
+    $req7 = "select * from ordonnance";
+    $rs7 = mysqli_query($conn,$req7) or die(mysqli_error());
 
 
+    
+    if (isset($_POST['ord'])) {
+        $med = $_POST['medicam'];
+        $per = $_POST['per'];
+        $nob = $_POST['nob'];
+        $pri = $_POST['pri'];
+        $qua = $_POST['qua'];
+        $rema = $_POST['rema'];
+    
+    
+    // $id=$_GET['code'];
+        $req8="INSERT INTO ordonnance (nom_med,date_odr,periode,jour,prise,quand,observation) values ('$med',now(), '$per','$nob','$pri','$qua','$rema');";  
+        $row8 =mysqli_query($conn,$req8);
+   
+      
+      }
 
 
 ?>
 
-
-
-                        
-                                        <div class="card-body">
-                            
-                            <div class="single-table">
-                                <div class="table-responsive">
-                                    <table class="table table-hover text-center">
-                                        <thead class="text-uppercase">
-                                            <tr>
-                                                <th scope="col">Categorie </th>
-                                          
-                                            </tr>
-                                        </thead>
-                                        <?php  while ($et = mysqli_fetch_assoc($result_all))  {  ?>
-                                        <tbody>
-                                            <tr>
-                                            <td> <a href=""  data-toggle="modal" data-target="#myModali" ><?php echo ($et['nom_cat']); ?> </a></td>
-                                     
-                                            </tr>
-
-                                            
-                                            <!-- basic modal start -->
-
-                                            
-                       
-                       <!-- Modal -->
-                       <div class="modal fade" id="myModali" data-backdrop="static">
-                           <div class="modal-dialog">
-                               <div class="modal-content">
-                                   <div class="modal-header">
-                                       <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                   </div>
-                                   <div class="modal-body">
-                                   <div class="form-group">
-                          
-                                   <select name="cat" id="cat" class="form-control"  onchange="Fetchmed(this.value)"  > 
-        <option value = "<?php while($row = mysqli_fetch_assoc($rs))
-    {
-      $option .= '<option value = "'.$row['id_cat'].'">'.$row['nom_cat'].'</option>'; }  ?>"><?php echo $option; ?></option>
-    </select>
-                        </div>
-                        <div class="form-group">
-                        <select name="med" id="med" class="form-control"   required>
-            <option value="">Select Medicament</option>
-        
-          </select>
-                        </div>
-                        
-                        
-                        
-                                   </div>
-                                   <div class="modal-footer">
-                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                       <button type="button" class="btn btn-primary">Valider</button>
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                 
-
-           <!-- basic modal end -->
-                                     
-
-
-
-
-       <!-- basic modal start -->
-
-                                            
-                       
-                       <!-- Modal -->
-                       <div class="modal fade" id="my" data-backdrop="static">
-                           <div class="modal-dialog">
-                               <div class="modal-content">
-                                   <div class="modal-header">
-                                       <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                   </div>
-                                   <div class="modal-body">
-                             gregher
-                        
-                        
-                        
-                                   </div>
-                                   <div class="modal-footer">
-                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                       <button type="button" class="btn btn-primary">Valider</button>
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                 
-
-           <!-- basic modal end -->
-
-
-
-
-
-
-
-           <script type="text/javascript">
+<script type="text/javascript">
   function Fetchmed(id){
     $('#med').html('');
     $.ajax({
@@ -498,17 +450,137 @@ while($row2 = mysqli_fetch_assoc($rs2))
 
   
 </script>
-                                        </tbody>
-                                        <?php } ?>
-                                    
-                                    </table>
-                                </div>
-                            </div>
-                    </div>
 
+<div class="row">
+<div class="col-md-6">
+															<label for="form-field-select-3">Choisir une Categorie :</label>
+
+															<br />
+															<select name="cat" id="cat" class="form-control" onchange="Fetchmed(this.value)" > 
+        <option value = "<?php while($row = mysqli_fetch_assoc($rs))
+    {
+      $option .= '<option value = "'.$row['id_cat'].'">'.$row['nom_cat'].'</option>'; }  ?>"><?php echo $option; ?></option>
+    </select>
+														
 
                                         
-                  
+                                                        <table class="table table-bordered table-hover " id="add_more_visitor">
+              <tr>
+                <td name="med" id="med">
+	
+           </td>
+       
+		
+		
+			
+              </tr>
+            </table>
+            </div>
+
+
+        
+                                <!-- Modal -->
+                                <div class="modal fade" id="Long">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                            <form action="" method="post">
+
+                                            <label for="">Medicament</label>
+<input type="text" name="medicam" class="form-control"  >
+
+<label for="">Periode</label>
+<select name="per"  class="form-control"> 
+<option value=""></option>
+<option value="7j">7j</option>
+<option value="5j">5j</option>
+<option value="3j">3j</option>
+<option value="Autre">Autre</option>
+     </select>
+     <label for="">Nombre par jour</label><select name="nob"  class="form-control"> 
+<option value=""></option>
+<option value="1 fois">1 fois</option>
+<option value="2 fois">2 fois</option>
+<option value="3 fois">3 fois</option>
+<option value="Autre">Autre</option>
+     </select>
+     <label for="">Prise</label><select name="pri"  class="form-control"> 
+<option value=""></option>
+<option value="1cc">1cc</option>
+<option value="1cp">1cp</option>
+<option value="1gel">1gel</option>
+<option value="1cas">1cas</option>
+<option value="1s">1s</option>
+<option value="Autre">Autre</option>
+     </select>
+     <label for="">Quand</label><select name="qua"  class="form-control"> 
+<option value=""></option>
+<option value="Avant">Avant</option>
+<option value="Pendant">Pendant</option>
+<option value="Aprés">Aprés</option>
+     </select>
+     <label for="">Remarque</label><input type="text" name="rema"  class="form-control "/>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <input type="submit" class="btn btn-primary" name="ord" value="Ajouter">
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                 
+                    <!-- basic modal end -->
+
+
+
+ <!-- table light start -->
+ <div class="col-md-6 ">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="single-table">
+                                    <div class="table-responsive">
+                                        <table class="table text-center">
+                                            <thead class="text-uppercase bg-light">
+                                                <tr>
+                                                    <th scope="col">Ordonnace</th>
+                                                    <th scope="col">Date</th>                        
+                                                    <th scope="col">Action</th>
+                                            
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php  while ($row7 = mysqli_fetch_assoc($rs7))  {  ?>
+                                                <tr>
+                                                <td><?php echo ($row7['Id_ord']); ?></td>
+                                                    <td><?php echo ($row7['date_odr']); ?></td>
+                                                     <td><a href="tcpdf/pdf/ordonnance.php?code=<?php echo ($row7['Id_ord']); ?>"><i class="fa fa-print"></i></a></td>
+                                                </tr>
+                                            <?php }  ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- table light end -->
+
+
+
+
+
+
+
+
+
+
+            </div>
                                         
                                         </p>
                                     </div>
@@ -601,15 +673,13 @@ while($data = mysqli_fetch_array($records))
                                         </p>
                                     </div>
 
-                                    <div class="tab-pane fade" id="paye" role="tabpanel" aria-labelledby="contact-tab">
-                                        <p>pas encore</p>
+                                    <div class="tab-pane fade" id="paye" role="tabpanel" onclick="myFunction()" aria-labelledby="contact-tab">
+                                        <p></p>
                                     </div>
 
                                     <div class="tab-pane fade" id="certificat" role="tabpanel" aria-labelledby="contact-tab">
                                         <p>
-
-
-                        
+   
                     <!-- Extra Large modal modal end -->
                     <div class="card">
                             <div>
@@ -677,7 +747,8 @@ while($data = mysqli_fetch_array($records))
                                             <tr>
                                             <td> <?php echo ($et['id_certif']); ?></td>
                                                 <td> <?php echo ($et['de']); ?> <?php echo ($et['a']); ?></td>
-                                                <td > <a href="#" > <i class="fa fa-eye"></i></a>      </td>
+                                                <td > <a href="#" > <i class="fa fa-eye"></i></a>  &nbsp;&nbsp;
+                                                <a href="#" > <i class="fa fa-print"></i></a>     </td>
                                              
                                                
                                          
@@ -715,7 +786,56 @@ while($data = mysqli_fetch_array($records))
                     </div>
           
           
+                    <script>  
+	$(document).ready(function(data){ 
 
+		showDrop();
+		
+		$('.product_drag_area').on('dragover', function(){  
+			$(this).addClass('product_drag_over');  
+			return false;  
+		});  
+		$('.product_drag_area').on('dragleave', function(){  
+			$(this).removeClass('product_drag_over');  
+			return false;  
+		});  
+		$('.product_drag').on('dragstart', function(e){  
+			e.originalEvent.dataTransfer.setData('productid', $(this).data('id')); 
+			e.originalEvent.dataTransfer.setData('productname', $(this).data('name')); 		   
+		});  
+		$('.product_drag_area').on('drop', function(e){  
+			e.preventDefault();  
+			$(this).removeClass('product_drag_over');  
+			var id = e.originalEvent.dataTransfer.getData('productid'); 
+			var name = e.originalEvent.dataTransfer.getData('productname');	
+			$.ajax({  
+                url:"action.php",  
+                method:"POST",  
+                data:{
+					id:	id,
+					name: name,
+					action: 1,
+				},  
+                success:function(){  
+                    showDrop(); 
+                }  
+			})  
+		});  
+	}); 
+	
+	function showDrop(){
+		$.ajax({  
+            url:"fetch_drop.php",  
+            method:"POST",  
+            data:{
+				fetch: 1,
+			},  
+            success:function(data){  
+                $('#dragable_product_order').html(data);  
+            }  
+		})
+	}
+ </script> 
 
 
 

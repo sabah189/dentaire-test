@@ -3,12 +3,49 @@
 
 include('conn.php');
 
-$req1 = "SELECT * from patient  ";
+$req1 = "SELECT * from acte  ";
 $rs1 = mysqli_query($conn,$req1) ;
 
- 
+
+if (isset($_POST['submit'])) {
+
+    $acte = $_POST['acte'];
+    $tarif=$_POST['tarif'];
 
 
+// $id=$_GET['code'];
+    $req2="INSERT INTO acte (acte,tarif) values ('$acte','$tarif');";  
+    $row2 =mysqli_query($conn,$req2);
+
+    header('location:actes.php');
+   
+  }
+
+  if(isset($_GET['delete_id']))
+  {
+   $sql_query1="DELETE FROM acte WHERE id_acte=".$_GET['delete_id'];
+   mysqli_query($conn,$sql_query1) ;
+   header("Location: actes.php");
+  }
+
+
+
+  $req3 = "SELECT * from acte  ";
+  $rs3 = mysqli_query($conn,$req3) ;
+  $row3=mysqli_fetch_array($rs3);
+  
+  if(isset($_POST['modifier']))
+  {
+
+
+$acte=$_POST['acte'];
+$tarif=$_POST['tarif'];
+
+
+$update= "UPDATE acte set acte='$acte', tarif='$tarif' ";
+$result=mysqli_query($conn,$update);
+header("location:actes.php");
+  }
 		  
 
 ?>
@@ -80,26 +117,25 @@ $rs1 = mysqli_query($conn,$req1) ;
                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                    </div>
                                    <div class="modal-body">
+                                   <form method="post" enctype="multipart/form-data">
                                    <div class="form-group">
                             <label for="example-text-input" class="col-form-label">Acte:</label>
-                                <input class="form-control" type="text" name="prof" id="example-text-input" >
+                                <input class="form-control" type="text" name="acte" id="example-text-input" >
                         </div>
                         <div class="form-group">
                             <label for="example-text-input" class="col-form-label">Tarif:</label>
-                                <input class="form-control" type="text" name="prof" id="example-text-input">
+                                <input class="form-control" type="text" name="tarif" id="example-text-input">
                         </div>
-                        <div class="form-group">
-                            <label for="example-text-input" class="col-form-label">Categorie:</label>
-                                <input class="form-control" type="text" name="prof" id="example-text-input">
-                        </div>
+                  
                        
                         
                         
                                    </div>
                                    <div class="modal-footer">
                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                       <button type="button" class="btn btn-primary">Save changes</button>
+              <input type="submit" name="submit" class="btn btn-primary" value="Ajouter">
                                    </div>
+                            </form>
                                </div>
                            </div>
                        </div>
@@ -131,7 +167,7 @@ $rs1 = mysqli_query($conn,$req1) ;
             <tr>
                 <th>Actes</th>
                 <th>Tarif</th>
-                <th>Categorie</th>
+                <th>Action</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -144,10 +180,12 @@ $rs1 = mysqli_query($conn,$req1) ;
         <?php  while ($et = mysqli_fetch_assoc($rs1))  {  ?>
     
             <tr>
-                <td>												  <?php echo ($et['nom']); ?>            <?php echo ($et['prenom']); ?>
+                <td>         <?php echo ($et['acte']); ?>
 </td>
-                <td>			<?php echo ($et['cin']); ?></td>
-                <td><?php echo ($et['sexe']); ?></td>
+                <td>		  <?php echo ($et['tarif']." Dhs"); ?></td>
+                <td>   &nbsp;&nbsp;&nbsp;&nbsp;    <a href="javascript:delete_id(<?php echo $et['id_acte']; ?>)" class=" fa fa-trash"  ></a>&nbsp;&nbsp;&nbsp;
+                <a href="#"data-toggle="modal" data-target="#mymodal" > <i class="fa fa-pencil"></i></a>
+            </td>
                 <td></td>
                 <td></td>
                 <td>  </td>
@@ -160,6 +198,45 @@ $rs1 = mysqli_query($conn,$req1) ;
             <?php } ?>
                 </tbody>
     </table>
+      <!-- basic modal start -->
+
+      <div class="card-body">
+                       
+                       <!-- Modal -->
+                       <div class="modal fade" id="mymodal" data-backdrop="static">
+                           <div class="modal-dialog">
+                               <div class="modal-content">
+                                   <div class="modal-header">
+                                       <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                   </div>
+                                   <div class="modal-body">
+                                   <form method="post" enctype="multipart/form-data">
+                                   <div class="form-group">
+                                   <input type="text" name="id" value="<?php echo ($row3['id_acte']); ?>">
+  
+                            <label for="example-text-input" class="col-form-label">Acte:</label>
+                                <input class="form-control" type="text" name="acte" id="example-text-input" value="<?php echo ($row3['acte']); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="example-text-input" class="col-form-label">Tarif:</label>
+                                <input class="form-control" type="text" name="tarif" id="example-text-input" value="<?php echo ($row3['tarif']); ?>">
+                        </div>
+                  
+                       
+                        
+                        
+                                   </div>
+                                   <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <input type="submit" name="modifier" class="btn btn-warning" value="Modifier">
+                                   </div>
+                            </form>
+                               </div>
+                           </div>
+                       </div>
+                 
+           </div>
+           <!-- basic modal end -->
                                 </div>
                             </div>
                         </div>
@@ -170,6 +247,18 @@ $rs1 = mysqli_query($conn,$req1) ;
             </div>
         </div>
     </div>
+
+
+    
+		<script type="text/javascript">
+function delete_id(id)
+{
+ if(confirm('Voulez vous vraiment supprimer ce acte ?'))
+ {
+  window.location.href='actes.php?delete_id='+id;
+ }
+}
+</script>
     <!-- offset area end -->
     <!-- jquery latest version -->
     <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
@@ -207,9 +296,6 @@ $('#example').dataTable({
 });
 
 } );
-
-
-
 
 
 

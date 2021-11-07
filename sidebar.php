@@ -31,7 +31,7 @@
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                    <a href="index.php"><img src="assets/images/icon/logop.png" alt="logo" style="width:90px"></a>
+                    <a href="dash.php"><img src="assets/images/icon/logop.png" alt="logo" style="width:90px"></a>
                 </div>
             </div>
             <div class="main-menu">
@@ -61,18 +61,18 @@
                               
                             </li>
                             <li>
-                                <a href="javascript:void(0)" ><i class="fa fa-file-pdf-o"></i>
+                                <a href="javascript:void(0)" onclick="myFunction()"><i class="fa fa-file-pdf-o"></i>
                                     <span>Note d'honoraires</span></a>
                          
                             </li>
                             <li>
-                                <a href="javascript:void(0)" ><i class="fa fa-file-pdf-o"></i>
+                                <a href="javascript:void(0)" onclick="myFunction()"><i class="fa fa-file-pdf-o"></i>
                                     <span>Confrére</span></a>
                          
                             </li>
-                            <li><a href="paiement.php"><i class="fa fa-money"></i> <span>Paiement</span></a></li>
+                            <li><a href="#" onclick="myFunction()"><i class="fa fa-money"></i> <span>Paiement</span></a></li>
                             <li>
-                                <a href="javascript:void(0)" ><i class="ti-layers-alt"></i> <span>Parametres</span></a>
+                                <a href="javascript:void(0)" onclick="myFunction()"><i class="ti-layers-alt"></i> <span>Parametres</span></a>
                  
                             </li>
                         
@@ -94,4 +94,8 @@
       
    
 
-    
+      <script>
+function myFunction() {
+  alert("Non inclus dans la version demo");
+}
+</script>

@@ -26,7 +26,7 @@ $row_info = mysqli_fetch_assoc($rs5);
 
 	
 	
-	 header('location:med.php?code='.$row_info['id_cat'].'');
+	 header('location:medicam.php?code='.$row_info['id_cat'].'');
 	}
 
 	
@@ -41,7 +41,7 @@ $row_info = mysqli_fetch_assoc($rs5);
 		$req="INSERT INTO medicament (nom_med, dosage,observation,id_cat) values ('$med','$dos', '$obs','$id_cat');";  
 		$row4 =mysqli_query($conn,$req);
 	
-		header('location:med.php?code='.$code.'');
+		header('location:medicam.php?code='.$code.'');
 	   
 	  }
 
@@ -60,7 +60,7 @@ $id=$_GET['code'];
 $cat=$_POST['cat'];
 $update= "UPDATE categorie_med set nom_cat='$cat' WHERE id_cat='$id' ";
 $result=mysqli_query($conn,$update);
-header('location:med.php?code='.$id.'');
+header('location:medicam.php?code='.$id.'');
 }
 
 
@@ -131,14 +131,48 @@ header('location:med.php?code='.$id.'');
 <div class="col-lg-6 mt-5" align="left">
                    
 
-                   <button type="button" class="btn btn-flat btn-primary" style="width:33%">     Ajouter medicament</button>
-                    <button type="button" class="btn btn-flat btn-warning " style="width:33%">    Modifier ce categorie</button>
+                   <button type="button" class="btn btn-flat btn-primary" data-toggle="modal" data-target="#myModal" style="width:33%">     Ajouter medicament</button>
+                    <button type="button" class="btn btn-flat btn-warning " data-toggle="modal" data-target="#myModal1" style="width:33%">    Modifier ce categorie</button>
                     <button type="button" class="btn btn-flat btn-danger "style="width:33%">   Supprimer ce categorie</button>
               
         </div>
 
         
+<!----------------AJOUTER Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <form action="" method="post">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter un medicament :</h5>
+      </div>
+      
+      <div class="modal-body">
+    
 
+      <input type="hidden" name="id" value="<?php echo $code ?>">
+  
+   <label for="">Medicaments : </label> 
+    <input type="text" name="med"  class="form-control" ><br>
+    <label for="">Dosage : </label> 
+    <input type="text" name="dos"  class="form-control" ><br>
+
+    <label for="">Observation : </label> 
+    <input type="text" name="obs"  class="form-control" ><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input  type="submit" class="btn btn-info " name="ajouter"  value="ajouter">
+      </div>
+    
+  </div>
+</div>
+</form>
+
+</div>
+         
+
+<!------------ Fin Modal ---------->
         
                     
                 
@@ -191,6 +225,41 @@ header('location:med.php?code='.$id.'');
                         </div>
                     </div>
                     <!-- data table end -->
+
+
+                    <!---------------MODIFIER--- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <form action="" method="post">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier ce categorie :</h5>
+      </div>
+      
+      <div class="modal-body">
+
+
+      <input type="hidden" name="id">
+  
+    
+    <p> Le nom du categorie : </p>
+    <input type="text" name="cat"  class="form-control" value="<?php echo ($row4['nom_cat']); ?>">
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input  type="submit" class="btn btn-info " name="modifier"  value="modifier">
+      </div>
+   
+  </div>
+</div>
+</form>
+
+</div>
+         
+
+<!------------ Fin Modal ---------->
      
             </div>
         </div>
