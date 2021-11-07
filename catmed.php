@@ -10,6 +10,10 @@ $row6=mysqli_fetch_array($rs4);
 
 
 
+
+
+
+
 if (isset($_POST['ajouter'])) {
 	$cat = $_POST['cat'];
 	
