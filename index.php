@@ -60,7 +60,7 @@ include('conn.php');
                     <!-- seo fact area start -->
                     <div class="col-lg-8">
                         <div class="row">
-                           <!--  <div class="col-md-6 mt-5 mb-3">
+                             <div class="col-md-6 mt-5 mb-3">
                                 <div class="card">
                                 <div class="seo-fact sbg1">
                                         
@@ -80,7 +80,7 @@ include('conn.php');
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div> 
                             <div class="col-md-6 mt-md-5 mb-3">
                                 <div class="card">
                                 
