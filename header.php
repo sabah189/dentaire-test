@@ -39,7 +39,7 @@
                             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
                         </ul>
                             <div class="">
-                            <img class="avatar user-thumb pull-right user-name dropdown-toggle" data-toggle="dropdown" src="assets/images/author/avatar2.png" alt="avatar">
+                            <img class="avatar user-thumb pull-right user-name dropdown-toggle" data-toggle="dropdown" src="assets/images/author/avatar.png" alt="avatar">
                 
                             <div class="dropdown-menu">
                              <a class="dropdown-item" href="logout.php"> <i class="ace-icon fa fa-power-off"></i> &nbsp;  Déconnexion</a>
