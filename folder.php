@@ -21,16 +21,16 @@ $row2 = mysqli_fetch_assoc($rs2);
 if (isset($_POST['ajouter'])) {
 
 
-    $code = $_GET['code'];
-    $pat = $_POST['pat'];
-    $date=$_POST['date'];
-    $type = $_POST['type'];
-    $motif = $_POST['motif'];
-    $acte = $_POST['acte'];
-    $tarif=$_POST['tarif'];
+    $code   = $_GET['code'];
+    $pat    = $_POST['pat'];
+    $date   = $_POST['date'];
+    $type   = $_POST['type'];
+    $motif  = $_POST['motif'];
+    $acte   = $_POST['acte'];
+    $tarif  = $_POST['tarif'];
 
 
-    $req3="INSERT INTO consultation (date_cons, motif,type,tarif,pat_id,id_acte) values ('$date','$motif','$type', '$tarif','$pat','$acte');";  
+    $req3="INSERT INTO consultation (date_cons,motif,type,tarif,pat_id,id_acte) values ('$date','$motif','$type', '$tarif','$pat','$acte');";  
     $row3 =mysqli_query($conn,$req3);
 
     //header('location:patient.php');
@@ -39,14 +39,14 @@ if (isset($_POST['ajouter'])) {
   }
 
 
-  $code = $_GET['code']; 
+  $code   = $_GET['code']; 
   $req4   ="SELECT * FROM consultation WHERE pat_id=$code ";
-  $rs4= mysqli_query($conn,$req4);
+  $rs4    = mysqli_query($conn,$req4);
 
    
   $code = $_GET['code'];    
   $req5 = "SELECT * from certificat  WHERE pat_id=$code";
-  $rs5 = mysqli_query($conn,$req5) ;
+  $rs5  = mysqli_query($conn,$req5) ;
   
    
   
@@ -312,8 +312,8 @@ while($row = mysqli_fetch_assoc($rs))
                                                     <td><?php echo ($row4['motif']); ?></td>
                                                     <td><?php echo ($row4['tarif']); ?></td>
                                                     <td> 
-                                                    <a href="#"data-toggle="modal" data-target="#myModal2" > <i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                                                    <a href="#"data-toggle="modal" data-target="#myModal2" > <i class="fa fa-trash"></i></a>
+                                                    <a href="#"data-toggle="modal" data-target="#myModal2" > <i class="fa fa-eye"></i></a>&nbsp;&nbsp;   
+                                                    <a href="#"data-toggle="modal"> <i class="fa fa-trash"></i></a>&nbsp;&nbsp;
                                                     </td>
                                 
                                                 </tr>
@@ -327,7 +327,64 @@ while($row = mysqli_fetch_assoc($rs))
                         </div>
                 
                     <!-- Hoverable Rows Table end --></p>
+                     
+                    
+                     <!-- Extra Large modal start -->
+       
+                                <!-- Large modal -->
+                                <div class="modal fade bd-example-modal-lg modal-xl" id="myModal3">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Modifier la consultation :</h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                      
+                                                <div class="row">
 
+                                                <div class="col">
+                                                <div class="form-group">
+                            <label for="example-text-input" class="col-form-label" >Patient :</label>
+                                <input class="form-control" type="text" name="cin" id="example-text-input" value="" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="example-date-input" class="col-form-label">Date :</label>
+                            <input class="form-control" type="date" name="ddn" id="example-date-input" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="example-text-input" class="col-form-label">Motif :</label>
+                                <input class="form-control" type="text" name="prenom" id="example-text-input">
+                        </div>
+                        <div class="form-group">
+                                            <label class="col-form-label">Type :</label>
+                                            <select class="form-control" name="sitfam">
+                                                <option>--</option>
+                                                <option value="marie">Consultation</option>
+                                                <option value="celibataire">Controle</option>
+                                            
+                                            </select>
+                        </div>
+                      
+                                                </div>
+
+                                        <img src="assets/images/icon/dental.png" alt="">
+
+                                            </div>      </div>
+
+                                                         
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                <input  type="submit" class="btn btn-primary" name="modifier" value="Modifier">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                        
+                    <!-- Extra Large modal modal end -->
 
                      <!-- Extra Large modal start -->
        
@@ -336,7 +393,7 @@ while($row = mysqli_fetch_assoc($rs))
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Ajouter une consultation</h5>
+                                                <h5 class="modal-title">Modifier la consultation: </h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
                                             <div class="modal-body">
@@ -362,8 +419,8 @@ while($row = mysqli_fetch_assoc($rs))
                                             <label class="col-form-label">Type :</label>
                                             <select class="form-control" name="sitfam">
                                                 <option>--</option>
-                                                <option value="marie">Consultation</option>
-                                                <option value="celibataire">Controle</option>
+                                                <option value="Consultation">Consultation</option>
+                                                <option value="Contrôle">Contrôle</option>
                                             
                                             </select>
                         </div>
@@ -376,8 +433,8 @@ while($row = mysqli_fetch_assoc($rs))
 
                                                          
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                <button type="button" class="btn btn-primary">Modifier</button>
                                             </div>
                                         </div>
                                     </div>
