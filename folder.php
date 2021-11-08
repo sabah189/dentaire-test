@@ -1,6 +1,7 @@
 <?php
 
 include('config.php');
+
 $code = $_GET['code']; 
 $req1 = "SELECT * from patient  WHERE pat_id=$code  ";
 $rs1 = mysqli_query($conn,$req1) ;
@@ -29,7 +30,7 @@ if (isset($_POST['ajouter'])) {
     $tarif=$_POST['tarif'];
 
 
-    $req3="INSERT INTO consultation ( date_cons, motif,type,tarif,pat_id,id_acte) values ('$date','$motif','$type', '$tarif','$pat','$acte');";  
+    $req3="INSERT INTO consultation (date_cons, motif,type,tarif,pat_id,id_acte) values ('$date','$motif','$type', '$tarif','$pat','$acte');";  
     $row3 =mysqli_query($conn,$req3);
 
     //header('location:patient.php');
@@ -38,7 +39,8 @@ if (isset($_POST['ajouter'])) {
   }
 
 
-  $req4   ="SELECT * FROM consultation ";
+  $code = $_GET['code']; 
+  $req4   ="SELECT * FROM consultation WHERE pat_id=$code ";
   $rs4= mysqli_query($conn,$req4);
 
    
@@ -49,15 +51,13 @@ if (isset($_POST['ajouter'])) {
    
   
   
-             if (isset($_POST['ajou'])) {
+             if (isset($_POST['ajou']))
+              {
               $id = $_POST['id'];
               $de = $_POST['de'];
               $a = $_POST['a'];
-      
-           
           
-          
-          // $id=$_GET['code'];
+             // $id=$_GET['code'];
               $req6="INSERT INTO certificat (de,a,pat_id) values ('$de', '$a','$id');";  
               $row6 =mysqli_query($conn,$req6);
          
@@ -219,8 +219,8 @@ while($row = mysqli_fetch_assoc($rs))
                                             <label class="col-form-label">Type :</label>
                                             <select class="form-control" name="type">
                                                 <option>--</option>
-                                                <option value="marie">Consultation</option>
-                                                <option value="celibataire">Controle</option>
+                                                <option value="Consultation">Consultation</option>
+                                                <option value="Contrôle">Contrôle</option>
                                             
                                             </select>
                         </div>
@@ -311,11 +311,10 @@ while($row = mysqli_fetch_assoc($rs))
                                                     <td><?php echo ($row4['id_acte']); ?></td>
                                                     <td><?php echo ($row4['motif']); ?></td>
                                                     <td><?php echo ($row4['tarif']); ?></td>
-
-                                                    <td > <a href="#"data-toggle="modal" data-target="#myModal2" > <i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+                                                    <td> 
                                                     <a href="#"data-toggle="modal" data-target="#myModal2" > <i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
                                                     <a href="#"data-toggle="modal" data-target="#myModal2" > <i class="fa fa-trash"></i></a>
-                                                </td>
+                                                    </td>
                                 
                                                 </tr>
                                          
