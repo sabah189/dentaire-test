@@ -75,11 +75,7 @@ if ($result)
     <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <!-- preloader area start -->
-    <div id="preloader">
-        <div class="loader"></div>
-    </div>
-    <!-- preloader area end -->
+    
     <!-- login area start -->
     <div class="login-area login-bg"style="background-image: url('assets/images/bg/login.jpeg');background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;">
         <div class="container">
