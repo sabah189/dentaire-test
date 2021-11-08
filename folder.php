@@ -208,7 +208,7 @@ while($row = mysqli_fetch_assoc($rs))
                           
                         <div class="form-group">
                                 <label class="col-form-label">patient :</label>
-                                <input class="form-control" type="text" name="pat" id="example-text-input"value ="<?php echo ($row1['nom']); ?>  <?php echo ($row1['prenom']); ?> " >
+                                <input class="form-control" type="text" name="pat" id="example-text-input"value ="<?php echo ($row1['nom']); ?>  <?php echo ($row1['prenom']); ?> " readonly>
                         </div> 
                         <div class="form-group">
                             <label for="example-date-input" class="col-form-label">Date :</label>
