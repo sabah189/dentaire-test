@@ -20,7 +20,7 @@ $cleardb_url      = parse_url(getenv("CLEARDB_DATABASE_URL"));
 $cleardb_server   = $cleardb_url["host"];
 $cleardb_username = $cleardb_url["user"];
 $cleardb_password = $cleardb_url["pass"];
-$cleardb_db       = substr($cleardb_url["mysql://bc9de0256b71d3:a2b62260@eu-cdbr-west-01.cleardb.com/heroku_3facac34f0e8bbd?reconnect=true"],1);
+$cleardb_db       = substr($cleardb_url["path"],1);
 $active_group     = 'default';
 $query_builder    = TRUE;
 // Connect to DB
