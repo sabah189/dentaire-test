@@ -3,17 +3,18 @@
 
 include("config.php");
 
-$datenow = date('Y-m-d H:i:s');
-    session_start();    
+    $datenow = date('Y-m-d H:i:s');
+    //session_start();    
 
 if(isset($_POST["go"])){
 	$user   = $_POST["log"];
 	$passe1 = $_POST["pas"];
 	$passe  = md5($passe1);
 
+    $query = "SELECT * FROM user WHERE user_name='".$user."' AND user_password='".$passe."'";
+    $result = mysqli_query($conn, $query);
 
-$query = "SELECT * FROM user WHERE user_name='".$user."' AND user_password='".$passe."'";
-$result = mysqli_query($conn, $query);
+
 if ($result) 
 {
 
@@ -21,13 +22,11 @@ if ($result)
 	$row                      = mysqli_fetch_assoc($result);
 	$iduseris                 = $row['user_id'];
 	
-	$_SESSION["session_login"]= $row['user_name'];
+	//$_SESSION["session_login"]= $row['user_name'];
 
 
     $update1="UPDATE user set last_activity='".$datenow."' WHERE user_name='".$user."' AND user_password='".$passe."'";
     mysqli_query($conn, $update1);
-
-        
 
 	if ($user=!$row['user_name'] || $passe=!$row['user_password'])
 	{
