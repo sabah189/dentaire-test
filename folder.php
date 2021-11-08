@@ -206,7 +206,10 @@ while($row = mysqli_fetch_assoc($rs))
 
                                                 <div class="col">
                           
-
+                        <div class="form-group">
+                                <label class="col-form-label">patient :</label>
+                                <input class="form-control" type="text" name="pat" id="example-text-input"value ="<?php echo ($row1['nom']); ?>  <?php echo ($row1['prenom']); ?> " >
+                        </div> 
                         <div class="form-group">
                             <label for="example-date-input" class="col-form-label">Date :</label>
                             <input class="form-control" type="date" name="date" id="example-date-input"  value ="<?php echo ($row2['date']); ?>" readonly>
@@ -240,10 +243,7 @@ while($row = mysqli_fetch_assoc($rs))
                                             <label class="col-form-label">Tarif :</label>
                                             <input class="form-control" type="text" name="med"  id="example-text-input">
                         </div>
-                        <div class="form-group">
-                                            <label class="col-form-label">pat :</label>
-                                            <input class="form-control" type="text" name="pat" id="example-text-input">
-                        </div>
+                        
                     
                                                 </div>
 

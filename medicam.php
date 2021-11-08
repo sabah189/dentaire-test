@@ -1,47 +1,74 @@
 
 <?php 
 
-include('config.php');
-
-//  $req2 = "select,pat.pat_id as id ,type_rdv as type from (t_patient pat) inner join (a_rdv rdv inner join t_patient pat on pat.pat_id = con.pat_id) on (sym.sym_id = con.sym_id ) having id= $code;";
-
-$req2="SELECT nom, prenom , date  ,heure,type, statut  , id_rdv FROM  rdv , patient pat where pat.pat_id=rdv.pat_id ";
-$rs6 = mysqli_query($conn,$req2);
+include('conn.php');
 
 
-
-
-$req = "select * from patient";
-$rs = mysqli_query($conn,$req) or die(mysqli_error());
-$option = NULL;
-
-while($row = mysqli_fetch_assoc($rs))
-    {
-      $option .= '<option value = "'.$row['pat_id'].'">'.$row['nom'].' '.$row['prenom'].' '.$row['ddn'].'</option>';
-    }
-
-    if (isset($_POST['ajouter']))
+$code = $_GET['code'];    
+$req2 = "SELECT * FROM medicament WHERE id_cat=$code  ";
+$rs9 = mysqli_query($conn,$req2) ;
+$row3=mysqli_fetch_array($rs9);
     
-    {
-      $patient = $_POST['patient'];
-      $date =  date("Y-m-d");
-      $heure = time("H:m:s");
-      $type = $_POST['type'];
-      $statut=0;
-	
+
+
+	if(isset($_GET['delete_id']))
+	{
+
   
-      
-      $req ="INSERT INTO rdv(date,heure,type,statut,pat_id ) values ('$date','$heure','$type','$statut','$patient');";  //requete SQL insertion 
-      mysqli_query($conn,$req);
+$req3 = "SELECT id_cat FROM categorie_med ";
+$rs5 = mysqli_query($conn,$req3) ;
+$row_info = mysqli_fetch_assoc($rs5);
+// $id = $row_info['id_cat'];
 
-      header('location:appointment.php');
-     
-    }
+	 $sql_query1="DELETE FROM medicament WHERE id_med=".$_GET['delete_id'];
+	 mysqli_query($conn,$sql_query1) ;
+
 
 	
-   
+	
+	 header('location:med.php?code='.$row_info['id_cat'].'');
+	}
+
+	
+	if (isset($_POST['ajouter'])) {
+		$med = $_POST['med'];
+		$obs = $_POST['obs'];
+		$dos = $_POST['dos'];
+		$id_cat=$_POST['id'];
+	
+	
+	// $id=$_GET['code'];
+		$req="INSERT INTO medicament (nom_med, dosage,observation,id_cat) values ('$med','$dos', '$obs','$id_cat');";  
+		$row4 =mysqli_query($conn,$req);
+	
+		header('location:medicam.php?code='.$code.'');
+	   
+	  }
+
+
+	  $code = $_GET['code'];    
+$req = "SELECT * from categorie_med where id_cat=$code  ";
+$rs4 = mysqli_query($conn,$req) ;
+$row4=mysqli_fetch_array($rs4);
+
+
+
+if(isset($_POST['modifier']))
+{
+
+$id=$_GET['code'];
+$cat=$_POST['cat'];
+$update= "UPDATE categorie_med set nom_cat='$cat' WHERE id_cat='$id' ";
+$result=mysqli_query($conn,$update);
+header('location:medicam.php?code='.$id.'');
+}
+
+
+
+
 
 ?>
+
 
 
 <!doctype html>
@@ -49,11 +76,10 @@ while($row = mysqli_fetch_assoc($rs))
 
 <head>
     <meta charset="utf-8">
-      	<!-- Site favicon -->
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Rendez-vous</title>
+    <title>Patients</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/icon/dent.png">
+    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
@@ -95,64 +121,43 @@ while($row = mysqli_fetch_assoc($rs))
          
             <!-- page title area end -->
             <div class="main-content-inner">
-                
-                <div class="row">
-                    
-                <div class="col" align="right" style="margin-top:20px">
-                            
-                            <a data-toggle="modal" data-target="#myModal"  >    
-                            <button  class="btn btn-sm btn-primary pull-right" > <i class="fa fa-calendar"></i> &nbsp; Nouveau Rendez-vous</button>
-  </a>
-                                             
+            
+<div class="col-lg-6 mt-5" align="left">
+                   
 
-</div>
+                   <button type="button" class="btn btn-flat btn-primary" style="width:33%" data-toggle="modal" data-target="#myModal">     Ajouter medicament</button>
+                    <button type="button" class="btn btn-flat btn-warning " style="width:33%" data-toggle="modal" data-target="#myModal1">    Modifier ce categorie</button>
+                    <button type="button" class="btn btn-flat btn-danger "style="width:33%">Supprimer ce categorie</button>
+              
+        </div>
 
-
-<!-- Modal -->
+        <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
   <form action="" method="post">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ajouter un rendez-vous :</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter un medicament :</h5>
       </div>
       
       <div class="modal-body">
-      <form method="post" action="">
+    
 
-      <input type="hidden" name="id">
-    <p>Patient:</p>
-    <select name="patient" class="form-control"> 
-        <option value = "<?php while($row = mysqli_fetch_assoc($rs))
-    {
-      $option .= '<option value = "'.$row['pat_id'].'">'.$row['pat_nom'].'+'.$row['pat_prenom'].'+'.$row['pat_ddn'].'</option>';
-    }  ?>"><?php echo $option; ?>
-    </option>
-    </select>
-    <br>
-    <p>date de rendez vous :</p>
-    <input type="date" name="date"  class="form-control">
-    <br>
-    <p>heure du rendez vous:</p>
-    <input type="time" id="txt" name="time"  class="form-control">
-        <br>
-    <p>type : </p>
-    <select class="form-control" name="type">
-                                                <option>--</option>
-                                                <option value="consultation">Consultation</option>
-                                                <option value="contrôle">Contrôle</option>
-                                            
-                                            </select>
+      <input type="hidden" name="id" value="<?php echo $code ?>">
+  
+    <p>Medicaments : </p>
+    <input type="text" name="med"  class="form-control" >
+	<p>dosage : </p>
+    <input type="text" name="dos"  class="form-control" >
 
-
-
-	
+    <p>Observation : </p>
+    <input type="text" name="obs"  class="form-control" >
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
         <input  type="submit" class="btn btn-info " name="ajouter"  value="ajouter">
       </div>
-    </form>
+    
   </div>
 </div>
 </form>
@@ -162,20 +167,57 @@ while($row = mysqli_fetch_assoc($rs))
 
 <!------------ Fin Modal ---------->
 
-<!-- data table start -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <form action="" method="post">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier ce categorie :</h5>
+      </div>
+      
+      <div class="modal-body">
+
+
+      <input type="hidden" name="id">
+  
+    
+    <p> Le nom du categorie : </p>
+    <input type="text" name="cat"  class="form-control" value="<?php echo ($row4['nom_cat']); ?>">
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <input  type="submit" class="btn btn-info " name="modifier"  value="modifier">
+      </div>
+   
+  </div>
+</div>
+</form>
+
+</div>
+         
+
+<!------------ Fin Modal ---------->
+        
+                    
+                
+                    <!-- data table start -->
                     <div class="col-12 mt-5">
                         
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title">la liste des rendez-vous</h4>
+                                <h4 class="header-title">la liste des médicaments pour la catégorie <?php echo ($row4['nom_cat']); ?></h4>
                                 <div class="data-tables">
                                 <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
         <thead>
             <tr>
-                <th>Patient</th>
-                <th>Date de RDV</th>
-                <th>Heure de RDV</th>
-                <th>Type</th>
+                <th>Action</th>
+                <th>Medicament</th>
+                <th>Observation</th>
+                <th>Dosage</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -184,19 +226,22 @@ while($row = mysqli_fetch_assoc($rs))
             </tr>
         </thead>
         <tbody>
-
-        <?php  while ($et = mysqli_fetch_assoc($rs6))  {  ?>
+        <?php  while ($et = mysqli_fetch_assoc($rs9))  {  ?>
     
             <tr>
-                <td><b>		 <?php echo ($et['nom']); ?>            <?php echo ($et['prenom']); ?></a></b>	</td>
-                <td><?php echo ($et['date']); ?></td>
-                <td><?php echo ($et['heure']); ?></td>
-                <td><?php echo ($et['type']); ?></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <td>
+	  <button style="background:none;border:0px"><a href="#" class=" fa fa-pencil"></a></button>
+	  <button style="background:none;border:0px">	  <a href="javascript:delete_id(<?php echo $et['id_med']; ?>)" class=" fa fa-trash" ></a></button>
+
+	  </td>                
+                <td><?php echo ($et['nom_med']); ?></td>
+                <td><?php echo ($et['observation']); ?></td>
+                <td> <?php echo ($et['dosage']); ?></td>
                 <td></td>
                 <td> </td>
+                <td></td>
+                <td> </td>
+                <td></td>
             </tr>
    
          
@@ -208,8 +253,7 @@ while($row = mysqli_fetch_assoc($rs))
                         </div>
                     </div>
                     <!-- data table end -->
-                 
-                </div>
+     
             </div>
         </div>
     </div>
@@ -239,23 +283,22 @@ while($row = mysqli_fetch_assoc($rs))
 <script src="  https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css"></script> 
 
     <script>$(document).ready(function() {
-    var table = $('#example').DataTable( {
-        "responsive": true,
-        "columnDefs": [
-            {
-                "targets": [ 4,5,6,7,8 ],
-                "visible": false,
-                "searchable": false
-            }
-         
-        ]
 
+$('#example').dataTable({
+  "columnDefs": [{ 
+    "targets": [4,5,6,7,8], //Comma separated values
+    "visible": false,
+    
+    "searchable": false }
+  ]
+});
 
-
-
-    } );
-    new $.fn.dataTable.FixedHeader( table );
 } );
+
+
+
+
+
 
 
 
