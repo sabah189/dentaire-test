@@ -6,10 +6,6 @@ include('config.php');
 $req1 = "SELECT * from patient  ";
 $rs1 = mysqli_query($conn,$req1) ;
 
- 
-
-
-		  
 
 ?>
 
@@ -20,11 +16,10 @@ $rs1 = mysqli_query($conn,$req1) ;
 
 <head>
     <meta charset="utf-8">
-    
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Patients</title>
+    <title>Paiement</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/icon/dent.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/icon/dent.png">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
@@ -67,48 +62,93 @@ $rs1 = mysqli_query($conn,$req1) ;
             <!-- page title area end -->
             <div class="main-content-inner">
                 
+            
                 <div class="row">
-                    
+                     <!-- basic modal start -->
+
+                     <div class="card-body">
+                       
+                       <!-- Modal -->
+                       <div class="modal fade" id="exampleModalLong" data-backdrop="static">
+                           <div class="modal-dialog">
+                               <div class="modal-content">
+                                   <div class="modal-header">
+                                       <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                   </div>
+                                   <div class="modal-body">
+                                   <div class="form-group">
+                            <label for="example-text-input" class="col-form-label">Acte:</label>
+                                <input class="form-control" type="text" name="prof" id="example-text-input" >
+                        </div>
+                        <div class="form-group">
+                            <label for="example-text-input" class="col-form-label">Tarif:</label>
+                                <input class="form-control" type="text" name="prof" id="example-text-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="example-text-input" class="col-form-label">Catégorie:</label>
+                                <input class="form-control" type="text" name="prof" id="example-text-input">
+                        </div>
+                       
+                        
+                        
+                                   </div>
+                                   <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                       <button type="button" class="btn btn-primary">Ajouter</button>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                 
+           </div>
+           <!-- basic modal end -->
                 <div class="col" align="right" style="margin-top:20px">
                             
-                            <a href="ajoutpat.php ">    
-                            <button  class="btn btn-sm btn-primary pull-right" > <i class="fa fa-user-plus"></i> &nbsp; Nouveau patient</button>
-  </a>
+                            
+                            <button  class="btn btn-sm btn-primary pull-right"  data-toggle="modal" data-target="#exampleModalLong"> <i class="fa fa-user-plus"></i> &nbsp; Nouveau acte</button>
+
+                                           
                                                                      </div>
+
+
+
+                                                                     
+
+
                     <!-- data table start -->
                     <div class="col-12 mt-5">
                         
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title">la liste des patients : </h4>
+                                <h4 class="header-title">la liste des actes</h4>
                                 <div class="data-tables">
                                 <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
         <thead>
             <tr>
-                <th>Patient</th>
-                <th>Cin</th>
-                <th>Sexe</th>
-                <th>Date de naissance</th>
-                <th>Profession</th>
-                <th>Type de mutuelle</th>
-                <th>Téléphone</th>
-                <th>Adresse</th>
-                <th>Action</th>
+                <th>Patients</th>
+                <th>Tarif</th>
+                <th>Catégorie</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th ></th>
             </tr>
         </thead>
         <tbody>
         <?php  while ($et = mysqli_fetch_assoc($rs1))  {  ?>
     
             <tr>
-                <td><b>	<a href="folder.php?code=<?php echo ($et['pat_id']); ?>">   <?php echo ($et['nom']); ?>   <?php echo ($et['prenom']); ?></a></b>	</td>
+                <td><?php echo ($et['nom']); ?>            <?php echo ($et['prenom']); ?></td>
                 <td><?php echo ($et['cin']); ?></td>
                 <td><?php echo ($et['sexe']); ?></td>
-                <td><?php echo ($et['ddn']); ?></td>
-                <td><?php echo ($et['profession']); ?></td>
-                <td><?php echo ($et['mutuelle']); ?></td>
-                <td><?php echo ($et['telephone']); ?></td>
-                <td><?php echo ($et['adresse']); ?></td>
-                <td> <a href="#"data-toggle="modal" data-target="#myModal2" > <i class="fa fa-eye"></i></a></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
    
          
@@ -124,12 +164,6 @@ $rs1 = mysqli_query($conn,$req1) ;
                 </div>
             </div>
         </div>
-         <!-- footer area start-->
-         <?php 
-      include('sidebar.php'); 
-      
-      ?>
-        <!-- footer area end-->
     </div>
     <!-- offset area end -->
     <!-- jquery latest version -->
@@ -156,24 +190,23 @@ $rs1 = mysqli_query($conn,$req1) ;
 <script src="  https://cdn.datatables.net/fixedheader/3.2.0/css/fixedHeader.bootstrap.min.css"></script> 
 <script src="  https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css"></script> 
 
-    <script>$(document).ready(function() {
-    var table = $('#example').DataTable( {
-        "responsive": true,
-        "columnDefs": [
-            {
-                "targets": [ 8 ],
-                "visible": false,
-                "searchable": false
-            }
-         
-        ]
+<script>$(document).ready(function() {
 
+$('#example').dataTable({
+  "columnDefs": [{ 
+    "targets": [3,4,5,6,7,8], //Comma separated values
+    "visible": false,
+    
+    "searchable": false }
+  ]
+});
 
-
-
-    } );
-    new $.fn.dataTable.FixedHeader( table );
 } );
+
+
+
+
+
 
 
 

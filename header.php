@@ -1,5 +1,21 @@
-<!-- header area start -->
-           
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+
+</head
+
+
+
+    
+<body>
+
+
 <div class="header-area">
                 <div class="row align-items-left">
                     <!-- nav and search button -->
@@ -23,10 +39,10 @@
                             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
                         </ul>
                             <div class="">
-                            <img class="avatar user-thumb pull-right user-name dropdown-toggle" data-toggle="dropdown" src="assets/images/author/avatar.png" alt="avatar">
+                            <img class="avatar user-thumb pull-right user-name dropdown-toggle" data-toggle="dropdown" src="assets/images/author/avatar2.png" alt="avatar">
                 
                             <div class="dropdown-menu">
-                             <a class="dropdown-item" href="logout.php">Log Out</a>
+                             <a class="dropdown-item" href="logout.php"> <i class="ace-icon fa fa-power-off"></i> &nbsp;  Déconnexion</a>
                        
                 </div>
                 </div>
@@ -38,3 +54,6 @@
      
             <!-- header area end -->
             <!-- page title area start -->
+
+</body>
+</html>

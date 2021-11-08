@@ -1,7 +1,7 @@
 
 <?php 
 
-include('conn.php');
+include('config.php');
 
 $req1 = "SELECT * from acte  ";
 $rs1 = mysqli_query($conn,$req1) ;
@@ -9,15 +9,15 @@ $rs1 = mysqli_query($conn,$req1) ;
 
 if (isset($_POST['submit'])) {
 
-    $acte = $_POST['acte'];
-    $tarif=$_POST['tarif'];
+    $acte   = $_POST['acte'];
+    $tarif  = $_POST['tarif'];
 
 
 // $id=$_GET['code'];
     $req2="INSERT INTO acte (acte,tarif) values ('$acte','$tarif');";  
     $row2 =mysqli_query($conn,$req2);
 
-    header('location:actes.php');
+    header('location:extraction.php');
    
   }
 
@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
   {
    $sql_query1="DELETE FROM acte WHERE id_acte=".$_GET['delete_id'];
    mysqli_query($conn,$sql_query1) ;
-   header("Location: actes.php");
+   header("Location: extraction.php");
   }
 
 
@@ -34,17 +34,20 @@ if (isset($_POST['submit'])) {
   $rs3 = mysqli_query($conn,$req3) ;
   $row3=mysqli_fetch_array($rs3);
   
+
+
+
   if(isset($_POST['modifier']))
   {
 
+$id     =$_GET['id'];
+$acte   =$_POST['acte'];
+$tarif  =$_POST['tarif'];
 
-$acte=$_POST['acte'];
-$tarif=$_POST['tarif'];
 
-
-$update= "UPDATE acte set acte='$acte', tarif='$tarif' ";
-$result=mysqli_query($conn,$update);
-header("location:actes.php");
+$update  = "UPDATE acte set acte='$acte', tarif='$tarif' WHERE  id_acte='$id' ";
+$result  =mysqli_query($conn,$update);
+header("location:extraction.php");
   }
 		  
 
@@ -60,7 +63,7 @@ header("location:actes.php");
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Actes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/icon/dent.png">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
@@ -132,7 +135,7 @@ header("location:actes.php");
                         
                                    </div>
                                    <div class="modal-footer">
-                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
               <input type="submit" name="submit" class="btn btn-primary" value="Ajouter">
                                    </div>
                             </form>
@@ -160,7 +163,7 @@ header("location:actes.php");
                         
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title">la liste des actes</h4>
+                                <h4 class="header-title">la liste des actes :</h4>
                                 <div class="data-tables">
                                 <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
         <thead>
@@ -180,18 +183,17 @@ header("location:actes.php");
         <?php  while ($et = mysqli_fetch_assoc($rs1))  {  ?>
     
             <tr>
-                <td>         <?php echo ($et['acte']); ?>
-</td>
-                <td>		  <?php echo ($et['tarif']." Dhs"); ?></td>
+                <td><?php echo ($et['acte']); ?></td>
+                <td><?php echo ($et['tarif']." Dhs"); ?></td>
                 <td>   &nbsp;&nbsp;&nbsp;&nbsp;    <a href="javascript:delete_id(<?php echo $et['id_acte']; ?>)" class=" fa fa-trash"  ></a>&nbsp;&nbsp;&nbsp;
                 <a href="#"data-toggle="modal" data-target="#mymodal" > <i class="fa fa-pencil"></i></a>
             </td>
                 <td></td>
                 <td></td>
-                <td>  </td>
-                <td>  </td>
                 <td></td>
-                <td ></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
    
          
@@ -227,7 +229,7 @@ header("location:actes.php");
                         
                                    </div>
                                    <div class="modal-footer">
-                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
               <input type="submit" name="modifier" class="btn btn-warning" value="Modifier">
                                    </div>
                             </form>
@@ -250,14 +252,16 @@ header("location:actes.php");
 
 
     
-		<script type="text/javascript">
-function delete_id(id)
-{
- if(confirm('Voulez vous vraiment supprimer ce acte ?'))
- {
-  window.location.href='actes.php?delete_id='+id;
- }
-}
+<script type="text/javascript">
+
+    function delete_id(id)
+    {
+    if(confirm('Voulez vous vraiment supprimer ce acte ?'))
+    {
+    window.location.href='extraction.php?delete_id='+id;
+    }
+    }
+
 </script>
     <!-- offset area end -->
     <!-- jquery latest version -->

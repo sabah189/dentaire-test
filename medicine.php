@@ -1,7 +1,7 @@
 
 <?php 
 
-include('conn.php');
+include('config.php');
 
 
 $code = $_GET['code'];    
@@ -15,18 +15,16 @@ $row3=mysqli_fetch_array($rs9);
 	{
 
   
-$req3 = "SELECT id_cat FROM categorie_med ";
-$rs5 = mysqli_query($conn,$req3) ;
+$req3     = "SELECT id_cat FROM categorie_med ";
+$rs5      = mysqli_query($conn,$req3) ;
 $row_info = mysqli_fetch_assoc($rs5);
 // $id = $row_info['id_cat'];
 
 	 $sql_query1="DELETE FROM medicament WHERE id_med=".$_GET['delete_id'];
 	 mysqli_query($conn,$sql_query1) ;
+	 header('location:medicine.php?code='.$row_info['id_cat'].'');
 
 
-	
-	
-	 header('location:medicam.php?code='.$row_info['id_cat'].'');
 	}
 
 	
@@ -41,7 +39,7 @@ $row_info = mysqli_fetch_assoc($rs5);
 		$req="INSERT INTO medicament (nom_med, dosage,observation,id_cat) values ('$med','$dos', '$obs','$id_cat');";  
 		$row4 =mysqli_query($conn,$req);
 	
-		header('location:medicam.php?code='.$code.'');
+		header('location:medicine.php?code='.$code.'');
 	   
 	  }
 
@@ -60,7 +58,7 @@ $id=$_GET['code'];
 $cat=$_POST['cat'];
 $update= "UPDATE categorie_med set nom_cat='$cat' WHERE id_cat='$id' ";
 $result=mysqli_query($conn,$update);
-header('location:medicam.php?code='.$id.'');
+header('location:medicine.php?code='.$id.'');
 }
 
 
@@ -79,7 +77,7 @@ header('location:medicam.php?code='.$id.'');
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Medicaments</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/icon/dent.png">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
@@ -120,7 +118,7 @@ header('location:medicam.php?code='.$id.'');
 
 <nav aria-label="breadcrumb"  >
   <ol class="breadcrumb"style="background-image: url('assets/images/icon/opticiens.jpg');background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;">
-    <li class="breadcrumb-item"><a href="catmed.php">Retour</a></li>
+    <li class="breadcrumb-item"><a href="category.php">Retour</a></li>
     <li class="breadcrumb-item active" aria-current="page">Medicament</li>
   </ol>
 </nav>
@@ -131,9 +129,9 @@ header('location:medicam.php?code='.$id.'');
 <div class="col-lg-6 mt-5" align="left">
                    
 
-                   <button type="button" class="btn btn-flat btn-primary" data-toggle="modal" data-target="#myModal" style="width:33%">     Ajouter medicament</button>
-                    <button type="button" class="btn btn-flat btn-warning " data-toggle="modal" data-target="#myModal1" style="width:33%">    Modifier ce categorie</button>
-                    <button type="button" class="btn btn-flat btn-danger "style="width:33%">   Supprimer ce categorie</button>
+                   <button type="button" class="btn btn-flat btn-primary" data-toggle="modal" data-target="#myModal" style="width:33%"> <i class="fa fa-medkit"></i>  &nbsp;  Ajouter medicament</button>
+                    <button type="button" class="btn btn-flat btn-warning " data-toggle="modal" data-target="#myModal1" style="width:33%">  <i class="fa fa-pencil"></i> &nbsp;  Modifier ce categorie</button>
+                    <button type="button" class="btn btn-flat btn-danger "style="width:33%"> <i class="fa fa-trash"></i> &nbsp;  Supprimer ce categorie</button>
               
         </div>
 
@@ -161,8 +159,8 @@ header('location:medicam.php?code='.$id.'');
     <input type="text" name="obs"  class="form-control" ><br>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input  type="submit" class="btn btn-info " name="ajouter"  value="ajouter">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <input  type="submit" class="btn btn-info " name="ajouter"  value="Ajouter">
       </div>
     
   </div>
@@ -233,7 +231,7 @@ header('location:medicam.php?code='.$id.'');
   <form action="" method="post">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modifier ce categorie :</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Modifier la  categorie :</h5>
       </div>
       
       <div class="modal-body">
@@ -242,14 +240,14 @@ header('location:medicam.php?code='.$id.'');
       <input type="hidden" name="id">
   
     
-    <p> Le nom du categorie : </p>
+    <p> Le nom de categorie : </p>
     <input type="text" name="cat"  class="form-control" value="<?php echo ($row4['nom_cat']); ?>">
 
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input  type="submit" class="btn btn-info " name="modifier"  value="modifier">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <input  type="submit" class="btn btn-info " name="modifier"  value="Modifier">
       </div>
    
   </div>

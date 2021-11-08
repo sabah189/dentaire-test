@@ -3,18 +3,13 @@
 // cell( width, height , border (0=no border , 1=bordered) , end line(0=continue , 1=newline) ,align L or C or R )
 include("../conn.php");
 require_once('tcpdf_include.php');
-
-$code = $_GET['code'];
-
-$identite_patient = "SELECT * FROM patient where pat_id=$code";
+$code = $_GET['code'];    
+$identite_patient = "SELECT * FROM patient where pat_id = $code ";
 $resultpat= mysqli_query($conn, $identite_patient);
 $patients = mysqli_fetch_assoc($resultpat);
 $nom_prenom = strtoupper($patients['nom'] );
-$prenom     = strtoupper($patients['prenom'] );
-
-
-/* $datenais = $patients['ddn'];
-$age      = $patients['adresse']; */
+$datenais = $patients['ddn'];
+$age= $patients['adresse'];
 
 $identite_doc ="SELECT * FROM docteur";
 $resultdoc= mysqli_query($conn, $identite_doc);

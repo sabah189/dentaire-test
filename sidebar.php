@@ -3,14 +3,10 @@
 
 .boutouna {
 
-
-
-	display:flex ;
-	align-items: center;
-  justify-content: center;
-
-
-  margin-top:20px;
+        display:flex ;
+        align-items: center;
+        justify-content: center;
+        margin-top:20px;
 
 }
 
@@ -19,12 +15,7 @@
 
 </style>
 
-    <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <!-- preloader area start -->
-   
-    <!-- preloader area end -->
+  
     <!-- page container area start -->
     <div class="page-container">
         <!-- sidebar menu area start -->
@@ -48,16 +39,16 @@
                             
                             </li>
                             <li>
-                                <a href="rdv.php" ><i class="fa fa-calendar"></i><span>Rendez-vous</span></a>
+                                <a href="appointment.php" ><i class="fa fa-calendar"></i><span>Rendez-vous</span></a>
                              
                             </li>
                         
                             <li>
-                                <a href="catmed.php" ><i class="fa fa-medkit" aria-hidden="true"></i><span>medicaments</span></a>
+                                <a href="category.php" ><i class="fa fa-medkit" aria-hidden="true"></i><span>medicaments</span></a>
                               
                             </li>
                             <li>
-                                <a href="actes.php" ><i class="ti-slice"></i><span>Actes</span></a>
+                                <a href="extraction.php" ><i class="ti-slice"></i><span>Actes</span></a>
                               
                             </li>
                             <li>
@@ -70,9 +61,9 @@
                                     <span>Confrére</span></a>
                          
                             </li>
-                            <li><a href="#" onclick="myFunction()"><i class="fa fa-money"></i> <span>Paiement</span></a></li>
+                            <li><a href="javascript:void(0)" onclick="myFunction()"><i class="fa fa-money"></i> <span>Paiement</span></a></li>
                             <li>
-                                <a href="javascript:void(0)" onclick="myFunction()"><i class="ti-layers-alt"></i> <span>Parametres</span></a>
+                                <a href="javascript:void(0)" onclick="myFunction()"><i class="ti-layers-alt"></i> <span>Paramètres</span></a>
                  
                             </li>
                         

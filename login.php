@@ -1,7 +1,7 @@
 <?php
 
 
-include("conn.php");
+include("config.php");
 
 $datenow = date('Y-m-d H:i:s');
     session_start();    
@@ -53,7 +53,7 @@ if ($result)
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Login-Dento</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/icon/dent.png">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
@@ -109,6 +109,8 @@ if ($result)
                         </div>
                         <div class="form-footer text-center mt-5">
                             <p class="text-muted">Pour plus d'information et support contactez nous ! </p>
+                            &nbsp;
+                            <p class="text-muted">User : admin  </p>   <p class="text-muted">Password : admin  </p>
                         </div>
                     </div>
                 </form>

@@ -1,7 +1,7 @@
 
 <?php 
 
-include('conn.php');
+include('config.php');
 
 
 $req = "SELECT * from categorie_med ";
@@ -10,20 +10,13 @@ $row6=mysqli_fetch_array($rs4);
 
 
 
-
-
-
-
 if (isset($_POST['ajouter'])) {
-	$cat = $_POST['cat'];
-	
 
+	$cat  = $_POST['cat'];
+	$req  ="INSERT INTO categorie_med(nom_cat) values ('$cat');";  
+  $row3 =mysqli_query($conn,$req);
 
-
-	$req="INSERT INTO categorie_med(nom_cat) values ('$cat');";  
-    $row3 =mysqli_query($conn,$req);
-
-	header('location:catmed.php');
+	header('location:category.php');
    
   }
  
@@ -45,7 +38,7 @@ if (isset($_POST['ajouter'])) {
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Categorie - Medicaments</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/icon/dent.png">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
@@ -111,14 +104,14 @@ if (isset($_POST['ajouter'])) {
       <input type="hidden" name="id">
   
     
-    <p> Le nom du categorie : </p>
+    <p> Le nom de categorie : </p>
     <input type="text" name="cat"  class="form-control" >
 
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input  type="submit" class="btn btn-info " name="ajouter"  value="ajouter">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <input  type="submit" class="btn btn-info " name="ajouter"  value="Ajouter">
       </div>
    
   </div>
@@ -143,7 +136,7 @@ if (isset($_POST['ajouter'])) {
         <div class="col-xs-12 col-sm-5" style="margin-left:40px">
 
 	
-  <a href="medicam.php?code=<?php echo ($et['id_cat']); ?>" >    <input style="width:100% ; height:90px; border-radius:20px" class="btn btn-info btn-app"    value="<?php echo ($et['nom_cat']); ?>" readonly /></a> 
+  <a href="medicine.php?code=<?php echo ($et['id_cat']); ?>" >  <input style="width:100% ; height:90px ; font-size:100% ; border-radius:20px, " class="btn btn-info btn-app"    value="<?php echo ($et['nom_cat']); ?>" readonly /></a> 
   <hr class="my-3">
 
   </div>

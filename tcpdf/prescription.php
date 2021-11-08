@@ -30,6 +30,16 @@ require_once('tcpdf_include.php');
 
 
 
+$code = $_GET['code'];    
+$identite_patient = "SELECT * FROM patient where pat_id = $code";
+$resultpat= mysqli_query($conn, $identite_patient);
+$pat = mysqli_fetch_assoc($resultpat);
+
+$identite = "SELECT * FROM rdv ";
+$rs= mysqli_query($conn, $identite);
+$rdv = mysqli_fetch_assoc($rs);
+
+
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
 	//Page header
@@ -105,7 +115,9 @@ $pdf->SetXY(13,9.4);
 $pdf->SetTextColor(51,122,183);
  $pdf->Ln(1.4);
  $pdf->SetX(15);
-$pdf->Cell(120	,5,'Docteur DOCTEUR ',0,0);
+ $pdf->SetFont('timesB', '', 10);
+
+$pdf->Cell(120	,5,'DOCTEUR DOCTEUR ',0,0);
 
 $pdf->SetFont('aefurat', '', 15);
 $pdf->SetX(-35);
@@ -114,7 +126,7 @@ $pdf->Cell(169	,5,'الدكتور',0,1);//end of line
 $pdf->SetX(15);
 
 //set font to arial, regular, 12pt
-$pdf->SetFont('dejavusans', '', 10);
+$pdf->SetFont('times', '', 10);
 $pdf->SetTextColor(51,122,183);
 $pdf->Cell(150	,5,'MEDECIN DENTAIRE',0,0);
 $pdf->SetX(-65);
@@ -125,7 +137,6 @@ $pdf->Cell(150	,4,'طب الاسنان',0,0);
 $pdf->Cell(89	,5,'',0,1);//end of line
 $pdf->SetTextColor(1,1,1);
 $pdf->SetFont('courierBI', '', 10);
-$pdf->Cell(130	,5,'Lorem Lorem',0,0);
 
 
 
@@ -153,15 +164,22 @@ $pdf->Cell(130	,5,'Lorem Lorem',0,0);
 
 
 $pdf->SetXY(-188,61);
+$pdf->SetTextColor(51,122,183);
 
 $pdf->Cell(72	,5,'Date :',0,1);
 
-$pdf->SetXY(19,79);
+$pdf->SetXY(17,79);
+$pdf->SetTextColor(51,122,183);
 
-$pdf->Cell(72	,6,'Patient :',0,1);
+$pdf->Cell(69	,6,'Patient :',0,1);
+$pdf->SetY(61);
+$pdf->SetX(40);
+$pdf->SetTextColor(1,1,1);
+$pdf->MultiCell(105,5,utf8_decode($rdv['date']),0, 'L'); 
 
-
-
+$pdf->SetY(79.7);
+$pdf->SetX(40);
+$pdf->MultiCell(105,5,utf8_decode(strtoupper($pat['nom'])) ,0, 'L'); 
 
 $pdf->SetY(47);
 // print some spot colors
@@ -216,6 +234,22 @@ while($row = mysqli_fetch_array($result))
 
 }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

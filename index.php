@@ -1,15 +1,11 @@
 <?php 
 
-include('conn.php');
+include('config.php');
 
-
-
-
-
-
-		  
 
 ?>
+
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -18,7 +14,7 @@ include('conn.php');
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Tableau de bord</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/icon/dent.png">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
@@ -87,7 +83,7 @@ include('conn.php');
                                        
                                     <div class="seo-fact sbg2">
                                         <div class="p-4 d-flex justify-content-between align-items-center">
-                                            <div class="seofct-icon"><i class="ti-calendar"></i><a href="rdv.php" style ="color:white"> Rendez-vous</div>
+                                            <div class="seofct-icon"><i class="ti-calendar"></i><a href="appointment.php" style ="color:white"> Rendez-vous</div>
                                             <?php
 
                                                 $result = mysqli_query($conn,"SELECT * FROM rdv ");
@@ -172,10 +168,10 @@ include('conn.php');
               <?php 
 	  
 	  if ($et ['statut'] == 1) {
-		  echo '<p> <a href="statut.php?id_rdv= '.$et[ 'id_rdv' ] . '& statut=0 " class=" label label-primary" id="modal"> En attente</a></p>';
+		  echo '<p> <a href="status.php?id_rdv= '.$et[ 'id_rdv' ] . '& statut=0 " class=" label label-primary" id="modal"> En attente</a></p>';
 	  }
 	  else{
-		  echo '<p> <a href="statut.php?id_rdv= '.$et[ 'id_rdv' ] . '& statut=1 " class=" label label-warning"> En cours</a></p>';
+		  echo '<p> <a href="status.php?id_rdv= '.$et[ 'id_rdv' ] . '& statut=1 " class=" label label-warning"> En cours</a></p>';
 		  
 	  }
 			
@@ -245,7 +241,7 @@ include('conn.php');
 		  echo '<p>  En attente</p>';
 	  }
 	  else{
-		  echo '<p> <a href="statut.php?id_rdv= '.$et[ 'id_rdv' ] . '& statut=1 " class=" label label-warning"> En cours</a></p>';
+		  echo '<p> <a href="status.php?id_rdv= '.$et[ 'id_rdv' ] . '& statut=1 " class=" label label-warning"> En cours</a></p>';
 		  
 	  }
 			
@@ -274,11 +270,10 @@ include('conn.php');
         </div>
         <!-- main content area end -->
         <!-- footer area start-->
-        <footer>
-            <div class="footer-area">
-                <p>© Dento app </p>
-            </div>
-        </footer>
+        <?php 
+      include('footer.php'); 
+      
+      ?>
         <!-- footer area end-->
     </>
     <!-- page container area end -->
