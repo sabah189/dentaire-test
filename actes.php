@@ -145,7 +145,7 @@ header("location:actes.php");
                 <div class="col" align="right" style="margin-top:20px">
                             
                             
-                            <button  class="btn btn-sm btn-primary pull-right"  data-toggle="modal" data-target="#exampleModalLong"> <i class="fa fa-user-plus"></i> &nbsp; Nouveau actes</button>
+                            <button  class="btn btn-sm btn-primary pull-right"  data-toggle="modal" data-target="#exampleModalLong"> <i class="fa fa-user-plus"></i> &nbsp; Nouveau acte</button>
 
                                            
                                                                      </div>

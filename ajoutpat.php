@@ -125,11 +125,11 @@ if (isset($_POST['ajout'])) {
    
                                  <b class="text-muted   d-block">Sexe: &nbsp; &nbsp; &nbsp;</b>
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio"  id="customRadio" name="sexe" class="custom-control-input">
+                                                <input type="radio" value="Femme" id="customRadio" name="sexe" class="custom-control-input">
                                                 <label class="custom-control-label" for="customRadio">Femme</label>
                                             </div>
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadio2" name="sexe" class="custom-control-input">
+                                                <input type="radio" value="Homme" id="customRadio2" name="sexe" class="custom-control-input">
                                                 <label class="custom-control-label" for="customRadio2">Homme</label>
                                             </div>
               </div>
@@ -170,15 +170,15 @@ if (isset($_POST['ajout'])) {
    
                                  <b class="text-muted   d-block">Mutuelle: &nbsp; &nbsp; &nbsp;</b>
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio"  id="customRadio1" name="typemut" class="custom-control-input">
+                                                <input type="radio" value="Cnss"  id="customRadio1" name="typemut" class="custom-control-input">
                                                 <label class="custom-control-label" for="customRadio1">Cnss</label>
                                             </div>
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadio3" name="typemut" class="custom-control-input">
+                                                <input type="radio" value="Cnops" id="customRadio3" name="typemut" class="custom-control-input">
                                                 <label class="custom-control-label" for="customRadio3">Cnops</label>
                                             </div>
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadio5" name="typemut" class="custom-control-input">
+                                                <input type="radio" value="Autre" id="customRadio5" name="typemut" class="custom-control-input">
                                                 <label class="custom-control-label" for="customRadio5">Autre</label>
                                             </div>
 

@@ -1,7 +1,8 @@
 <?php
 
 include('conn.php');
-$code = $_GET['code']; 
+$code = $_GET['code'];
+
 $req1 = "SELECT * from patient  WHERE pat_id=$code  ";
 $rs1 = mysqli_query($conn,$req1) ;
 $row1 = mysqli_fetch_assoc($rs1);
@@ -11,26 +12,30 @@ $row1 = mysqli_fetch_assoc($rs1);
 $sql_all    ="SELECT * FROM categorie_med  ORDER BY id_cat ";
 $result_all = mysqli_query($conn,$sql_all);
 
+
+
 $req2    ="SELECT * FROM rdv  ";
-$rs2= mysqli_query($conn,$req2);
-$row2 = mysqli_fetch_assoc($rs2);
+$rs2     = mysqli_query($conn,$req2);
+$row2    = mysqli_fetch_assoc($rs2);
 
 
 	
-if (isset($_POST['ajouter'])) {
-    $pat = $_POST['pat'];
-    $date=$_POST['date'];
-    $type = $_POST['type'];
-    $motif = $_POST['motif'];
-    $acte = $_POST['acte'];
-    $tarif=$_POST['tarif'];
+if (isset($_POST['ajouterconsul'])) {
+
+
+    $pat       = addslashes($_POST['pat']);
+    $date      = addslashes($_POST['date']);
+    $type      = addslashes($_POST['type']);
+    $motif     = addslashes($_POST['motif']);
+    $acte      = addslashes($_POST['acte']);
+    $tarif     = addslashes($_POST['tarif']);
 
 
 // $id=$_GET['code'];
-    $req3="INSERT INTO consultation ( date_cons, motif,type,tarif,pat_id,id_acte) values ('$date','$motif','$type', '$tarif','$pat','$acte');";  
+    $req3="INSERT INTO consultation (date_cons,motif,type,tarif,pat_id,id_acte) values ('$date','$motif','$type', '$tarif','$pat','$acte');";  
     $row3 =mysqli_query($conn,$req3);
 
-    header('location:patient.php');
+    header('location:dossier.php?code='.$code.'');
    
   }
 
@@ -49,10 +54,7 @@ if (isset($_POST['ajouter'])) {
              if (isset($_POST['ajou'])) {
               $id = $_POST['id'];
               $de = $_POST['de'];
-              $a = $_POST['a'];
-      
-           
-          
+              $a  = $_POST['a'];
           
           // $id=$_GET['code'];
               $req6="INSERT INTO certificat (de,a,pat_id) values ('$de', '$a','$id');";  
@@ -68,6 +70,8 @@ if (isset($_POST['ajouter'])) {
 
 <head>
     <meta charset="utf-8">
+      	<!-- Site favicon -->
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/icon/dent.png">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Dossier</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -133,7 +137,7 @@ if (isset($_POST['ajouter'])) {
    					<?php echo ($row1['nom']); ?>						<?php echo ($row1['prenom']); ?>
 							
 									<i class="ace-icon fa fa-angle-double-right"></i>
-									<?php echo ($row1['sexe']); ?> <?php echo ($row1['ddn']); ?>
+									<?php echo ($row1['sexe']); ?> , <?php echo ($row1['ddn']); ?>
 
 							</h4>
                         <div class="card">
@@ -202,7 +206,10 @@ while($row = mysqli_fetch_assoc($rs))
 
                                                 <div class="col">
                           
-
+                                                <div class="form-group">
+                                    <label class="col-form-label">patient :</label>
+                                <input class="form-control" type="text" name="pat" id="example-text-input" value ="<?php echo ($row1['nom']); ?> <?php echo ($row1['prenom']); ?>" readonly>
+                        </div>
                         <div class="form-group">
                             <label for="example-date-input" class="col-form-label">Date :</label>
                             <input class="form-control" type="date" name="date" id="example-date-input"  value ="<?php echo ($row2['date']); ?>" readonly>
@@ -212,8 +219,8 @@ while($row = mysqli_fetch_assoc($rs))
                                             <label class="col-form-label">Type :</label>
                                             <select class="form-control" name="type">
                                                 <option>--</option>
-                                                <option value="marie">Consultation</option>
-                                                <option value="celibataire">Controle</option>
+                                                <option value="Consultation">Consultation</option>
+                                                <option value="Contrôle">Contrôle</option>
                                             
                                             </select>
                         </div>
@@ -225,7 +232,7 @@ while($row = mysqli_fetch_assoc($rs))
                   
                         <div class="form-group">
                                             <label class="col-form-label">Acte :</label>
-                                            <select name="cat" id="cat" class="form-control" onchange="Fetchmed(this.value)" > 
+                                            <select name="acte" id="acte" class="form-control" onchange="Fetchmed(this.value)" > 
         <option value = "<?php while($row = mysqli_fetch_assoc($rs))
     {
       $option .= '<option value = "'.$row['id_acte'].'">'.$row['acte'].'</option>'; }  ?>"><?php echo $option; ?></option>
@@ -234,12 +241,9 @@ while($row = mysqli_fetch_assoc($rs))
                         </div>
                         <div class="form-group">
                                             <label class="col-form-label">Tarif :</label>
-                                            <input class="form-control" type="text" name="med"  id="example-text-input">
+                                            <input class="form-control" type="text" name="tarif"  id="example-text-input">
                         </div>
-                        <div class="form-group">
-                                            <label class="col-form-label">pat :</label>
-                                            <input class="form-control" type="text" name="pat" id="example-text-input">
-                        </div>
+                        
                     
                                                 </div>
 
@@ -277,8 +281,8 @@ include('dentchart.php');
 
                        
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <input type="submit" class="btn btn-primary" name="ajouter" value="ajouter">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                <input type="submit" class="btn btn-primary" name="ajouterconsul" value="Ajouter">
                                             </div>
                                             </form>
                                         </div>
@@ -307,7 +311,8 @@ include('dentchart.php');
 
                                             <tbody>
                                                 <tr>
-                                                <td>	<?php echo ($row4['type']); ?></td>
+                                                <td>	
+                                                    <?php     echo ($row4['type']); ?></td>
                                                     <td><?php echo ($row4['id_acte']); ?></td>
                                                     <td><?php echo ($row4['motif']); ?></td>
                                                     <td><?php echo ($row4['tarif']); ?></td>
@@ -410,6 +415,7 @@ while($row = mysqli_fetch_assoc($rs))
 
     $req7 = "select * from ordonnance";
     $rs7 = mysqli_query($conn,$req7) or die(mysqli_error());
+
 
 
     
@@ -559,7 +565,7 @@ while($row = mysqli_fetch_assoc($rs))
                                                 <tr>
                                                 <td><?php echo ($row7['Id_ord']); ?></td>
                                                     <td><?php echo ($row7['date_odr']); ?></td>
-                                                     <td><a href="tcpdf/pdf/ordonnance.php?code=<?php echo ($row7['Id_ord']); ?>"><i class="fa fa-print"></i></a></td>
+                                                     <td><a href="tcpdf/ordonnance.php?code=<?php echo ($row7['Id_ord']); ?>"><i class="fa fa-print"></i></a></td>
                                                 </tr>
                                             <?php }  ?>
                                             </tbody>
@@ -699,11 +705,12 @@ while($data = mysqli_fetch_array($records))
                            <div class="modal-dialog">
                                <div class="modal-content">
                                    <div class="modal-header">
+                                   <h5 class="modal-title">Ajouter certificat:</h5>
                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                    </div>
                                    <div class="modal-body">
                                    <form action="" method="post">
-                                   <input class="form-control" type="text" name="id" id="example-text-input" value="<?php echo $code; ?>">
+                                   <input class="form-control" type="hidden" name="id" id="example-text-input" value="<?php echo $code; ?>">
                         
                         <div class="form-group">
                             <label for="example-text-input" class="col-form-label">De:</label>
@@ -746,9 +753,9 @@ while($data = mysqli_fetch_array($records))
                                         <?php  while ($et = mysqli_fetch_assoc($rs5))  {  ?>
                                             <tr>
                                             <td> <?php echo ($et['id_certif']); ?></td>
-                                                <td> <?php echo ($et['de']); ?> <?php echo ($et['a']); ?></td>
+                                                <td> du &nbsp; <?php echo ($et['de']); ?> &nbsp; à &nbsp; <?php echo ($et['a']); ?></td>
                                                 <td > <a href="#" > <i class="fa fa-eye"></i></a>  &nbsp;&nbsp;
-                                                <a href="#" > <i class="fa fa-print"></i></a>     </td>
+                                                <a href="tcpdf/rapport.php?code=<?php echo ($et['id_certif']); ?>&pat_id=<?php echo $code; ?>" > <i class="fa fa-print"></i></a>     </td>
                                              
                                                
                                          
@@ -783,6 +790,14 @@ while($data = mysqli_fetch_array($records))
 </div>
             
                 </div>
+
+                <!-- footer area start-->
+        <footer>
+            <div class="footer-area">
+                <p>© Dento app </p>
+            </div>
+        </footer>
+        <!-- footer area end-->
                     </div>
           
           
@@ -840,6 +855,7 @@ while($data = mysqli_fetch_array($records))
 
 
     <!-- offset area end -->
+    
     <!-- jquery latest version -->
     <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
     <!-- bootstrap 4 js -->

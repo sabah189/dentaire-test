@@ -25,7 +25,7 @@
  */
 
 // Include the main TCPDF library (search for installation path).
-include("../../conn.php");
+include("../conn.php");
 require_once('tcpdf_include.php');
 
 
@@ -216,22 +216,6 @@ while($row = mysqli_fetch_array($result))
 
 }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

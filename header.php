@@ -24,8 +24,9 @@
                         </ul>
                             <div class="">
                             <img class="avatar user-thumb pull-right user-name dropdown-toggle" data-toggle="dropdown" src="assets/images/author/avatar.png" alt="avatar">
+                
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="logout.php">Log Out</a>
+                             <a class="dropdown-item" href="logout.php">Log Out</a>
                        
                 </div>
                 </div>

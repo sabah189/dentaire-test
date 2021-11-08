@@ -4,12 +4,17 @@
 include("../conn.php");
 require_once('tcpdf_include.php');
 
-$identite_patient = "SELECT * FROM patient ";
+$code = $_GET['code'];
+
+$identite_patient = "SELECT * FROM patient where pat_id=$code";
 $resultpat= mysqli_query($conn, $identite_patient);
 $patients = mysqli_fetch_assoc($resultpat);
 $nom_prenom = strtoupper($patients['nom'] );
-$datenais = $patients['ddn'];
-$age= $patients['adresse'];
+$prenom     = strtoupper($patients['prenom'] );
+
+
+/* $datenais = $patients['ddn'];
+$age      = $patients['adresse']; */
 
 $identite_doc ="SELECT * FROM docteur";
 $resultdoc= mysqli_query($conn, $identite_doc);

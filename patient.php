@@ -90,7 +90,7 @@ $rs1 = mysqli_query($conn,$req1) ;
                 <th>Date de naissance</th>
                 <th>Fonction</th>
                 <th>Type de mutuelle</th>
-                <th>Telephone</th>
+                <th>Telephone(+212)</th>
                 <th>Adresse</th>
                 <th>Action</th>
             </tr>
@@ -124,6 +124,13 @@ $rs1 = mysqli_query($conn,$req1) ;
                 </div>
             </div>
         </div>
+         <!-- footer area start-->
+         <footer>
+            <div class="footer-area">
+                <p>© Dento app </p>
+            </div>
+        </footer>
+        <!-- footer area end-->
     </div>
     <!-- offset area end -->
     <!-- jquery latest version -->

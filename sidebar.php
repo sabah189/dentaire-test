@@ -31,7 +31,7 @@
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                    <a href="dash.php"><img src="assets/images/icon/logop.png" alt="logo" style="width:90px"></a>
+                    <a href="index.php"><img src="assets/images/icon/logop.png" alt="logo" style="width:90px"></a>
                 </div>
             </div>
             <div class="main-menu">
