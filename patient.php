@@ -71,7 +71,7 @@ $rs1 = mysqli_query($conn,$req1) ;
                     
                 <div class="col" align="right" style="margin-top:20px">
                             
-                            <a href="ajoutpat.php ">    
+                            <a href="add.php ">    
                             <button  class="btn btn-sm btn-primary pull-right" > <i class="fa fa-user-plus"></i> &nbsp; Nouveau patient</button>
   </a>
                                                                      </div>
